@@ -29,9 +29,10 @@ class NaverMap extends StatefulWidget {
 class _NaverMapState extends State<NaverMap> {
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> creationParams = <String, dynamic>{
+    final creationParams = <String, dynamic>{
       'clientId': widget.clientId,
     };
+
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
         viewType: 'rooftop/flutter_naver_map_plugin',
