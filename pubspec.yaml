@@ -1,6 +1,6 @@
 name: flutter_naver_map_plugin
 description: Naver map SDK plugin for flutter
-version: 0.0.1
+version: 0.1.0
 author:
 homepage: ''
 
@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_plugin_android_lifecycle: ^1.0.6
 
 dev_dependencies:
   flutter_test:

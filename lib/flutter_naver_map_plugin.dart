@@ -1,13 +1,8 @@
-import 'dart:async';
+library flutter_naver_map_plugin;
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
-class FlutterNaverMapPlugin {
-  static const MethodChannel _channel =
-      const MethodChannel('flutter_naver_map_plugin');
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-}
+part 'src/naver_map.dart';
