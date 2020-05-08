@@ -8,4 +8,5 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 part 'src/geometry.dart';
+part 'src/location.dart';
 part 'src/naver_map.dart';
