@@ -1,12 +1,29 @@
 part of flutter_naver_map_plugin;
 
 class NaverMap extends StatefulWidget {
-  const NaverMap({
-    Key key,
-    @required this.clientId,
+  /// 지도에서 표현할 수 있는 최소 줌 레벨.
+  static const int minimumZoom = 0;
+
+  /// 지도에서 표현할 수 있는 최대 줌 레벨.
+  static const int maximumZoom = 21;
+
+  /// 지도에서 표현할 수 있는 최소 기울기 각도.
+  static const double minimumTilt = 0;
+
+  /// 지도에서 표현할 수 있는 최대 기울기 각도.
+  static const double maximumTilt = 60;
+
+  /// 지도에서 표현할 수 있는 최소 베어링 각도.
+  static const double minimumBearing = 0;
+
+  /// 지도에서 표현할 수 있는 최대 베어링 각도.
+  static const double maximumBearing = 0;
+
+  const NaverMap(
+    this.clientId, {
     this.gestureRecognizers,
-  })  : assert(clientId != null, 'Cannot be null'),
-        super(key: key);
+    Key key,
+  }) : super(key: key);
 
   /// Naver Cloud Platform에서 발급되는 client ID.
   final String clientId;
