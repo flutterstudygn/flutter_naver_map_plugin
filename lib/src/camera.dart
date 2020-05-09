@@ -20,12 +20,12 @@ class CameraPosition {
   /// 줌 레벨.
   ///
   /// 이 값이 증가할수록 축척이 증가합니다.
-  final int zoom;
+  final double zoom;
 
   /// 카메라 위치에 관한 모든 요소를 지정해 객체를 생성합니다.
   CameraPosition(
     this.target, {
-    int zoom = 0,
+    double zoom = 0,
     double bearing = 0,
     double tilt = 0,
   })  : zoom = Geometry.clamp(zoom, NaverMap.minimumZoom, NaverMap.maximumZoom),
