@@ -12,7 +12,12 @@ class MyApp extends StatelessWidget {
           title: const Text('Naver map example'),
         ),
         body: NaverMap(
-          clientId: 'Your client id',
+          'Your NCP Client ID',
+          naverMapOptions: NaverMapOptions(
+            camera: CameraPosition(
+              LatLng(37.566677, 126.978408),
+            ),
+          ),
         ),
       ),
     );
