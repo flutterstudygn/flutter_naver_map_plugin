@@ -8,6 +8,7 @@ import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.naver.maps.map.MapView
+import com.naver.maps.map.NaverMapOptions
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.platform.PlatformView
@@ -20,12 +21,13 @@ class FlutterNaverMap(
         private val registrar: PluginRegistry.Registrar?,
         context: Context,
         application: Application?,
-        activityHashCode: Int
+        activityHashCode: Int,
+        naverMapOptions: NaverMapOptions
 ) : DefaultLifecycleObserver,
         Application.ActivityLifecycleCallbacks,
         ActivityPluginBinding.OnSaveInstanceStateListener,
         PlatformView {
-    private val mapView = MapView(context)
+    private val mapView = MapView(context, naverMapOptions)
 
     private val activityHashCode = activityHashCode
         get() = registrar?.activity()?.hashCode() ?: field
