@@ -11,7 +11,14 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Naver map example'),
         ),
-        body: NaverMap('Your client id'),
+        body: NaverMap(
+          'Your NCP Client ID',
+          naverMapOptions: NaverMapOptions(
+            camera: CameraPosition(
+              LatLng(37.566677, 126.978408),
+            ),
+          ),
+        ),
       ),
     );
   }
