@@ -54,14 +54,14 @@ class NaverMap extends StatefulWidget {
   /// Naver Cloud Platform에서 발급되는 client ID.
   final String clientId;
 
-  final NaverMapOptions naverMapOptions;
+  final NaverMapOptions _naverMapOptions;
 
   NaverMap(
     this.clientId, {
     this.gestureRecognizers,
     NaverMapOptions naverMapOptions,
     Key key,
-  })  : naverMapOptions = naverMapOptions ?? NaverMapOptions(),
+  })  : _naverMapOptions = naverMapOptions ?? NaverMapOptions(),
         super(key: key);
 
   /// 어떤 제스쳐가 지도에 적용될지를 지정합니다.
@@ -84,7 +84,7 @@ class _NaverMapState extends State<NaverMap> {
   Widget build(BuildContext context) {
     final creationParams = <String, dynamic>{
       'clientId': widget.clientId,
-      'options': widget.naverMapOptions._json,
+      'options': widget._naverMapOptions._json,
     };
 
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -92,6 +92,7 @@ class _NaverMapState extends State<NaverMap> {
         viewType: 'rooftop/flutter_naver_map_plugin',
         gestureRecognizers: widget.gestureRecognizers,
         creationParams: creationParams,
+        onPlatformViewCreated: onCreateMap,
         creationParamsCodec: const StandardMessageCodec(),
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
@@ -105,5 +106,9 @@ class _NaverMapState extends State<NaverMap> {
 
     return Text(
         '$defaultTargetPlatform is not yet supported by the maps plugin');
+  }
+
+  void onCreateMap(int id) {
+    NaverMapController.init(id, widget._naverMapOptions);
   }
 }

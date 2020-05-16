@@ -405,6 +405,50 @@ class NaverMapOptions {
         'camera': camera._json,
       };
 
+  NaverMapOptions get clone => NaverMapOptions(
+        minZoom: minZoom,
+        maxZoom: maxZoom,
+        contentPadding: contentPadding,
+        defaultCameraAnimationDuration: defaultCameraAnimationDuration,
+        mapType: mapType,
+        enabledLayerGroups: enabledLayerGroups,
+        disabledLayerGroups: disabledLayerGroups,
+        liteModeEnabled: liteModeEnabled,
+        nightModeEnabled: nightModeEnabled,
+        indoorEnabled: indoorEnabled,
+        indoorFocusRadius: indoorFocusRadius,
+        backgroundColor: backgroundColor,
+        // backgroundResource: backgroundResource, todo
+        pickTolerance: pickTolerance,
+        scrollGesturesEnabled: scrollGesturesEnabled,
+        zoomGesturesEnabled: zoomGesturesEnabled,
+        tiltGesturesEnabled: tiltGesturesEnabled,
+        rotateGesturesEnabled: rotateGesturesEnabled,
+        stopGesturesEnabled: stopGesturesEnabled,
+        compassEnabled: compassEnabled,
+        scaleBarEnabled: scaleBarEnabled,
+        zoomControlEnabled: zoomControlEnabled,
+        indoorLevelPickerEnabled: indoorLevelPickerEnabled,
+        locationButtonEnabled: locationButtonEnabled,
+        logoClickEnabled: logoClickEnabled,
+        logoGravity: logoGravity,
+        logoMargin: logoMargin,
+        fpsLimit: fpsLimit,
+        useTextureView: useTextureView,
+        translucentTextureSurface: translucentTextureSurface,
+        zOrderMediaOverlay: zOrderMediaOverlay,
+        preserveEGLContextOnPause: preserveEGLContextOnPause,
+        extent: extent,
+        buildingHeight: buildingHeight,
+        lightness: lightness,
+        symbolScale: symbolScale,
+        symbolPerspectiveRatio: symbolPerspectiveRatio,
+        scrollGesturesFriction: scrollGesturesFriction,
+        zoomGesturesFriction: zoomGesturesFriction,
+        rotateGesturesFriction: rotateGesturesFriction,
+        camera: camera,
+      );
+
   @override
   String toString() => '$runtimeType: $_json';
 }

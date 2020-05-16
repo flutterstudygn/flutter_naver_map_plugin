@@ -12,6 +12,7 @@ part 'src/camera.dart';
 part 'src/geometry.dart';
 part 'src/location.dart';
 part 'src/naver_map.dart';
+part 'src/naver_map_controller.dart';
 part 'src/naver_map_options.dart';
 part 'src/platform_constants.dart';
 part 'src/ui.dart';
