@@ -260,7 +260,10 @@ class NaverMapOptions {
 
   /// 지도 렌더링을 위해 GLSurfaceView대신 TextureView를 사용할지 여부.
   ///
-  /// 기본값은 false입니다.
+  /// 기본값은 debug build에선 true release builde에선 false 입니다.
+  ///
+  /// 이유는 알 수 없지만 hot reload 시 GLSurfaceView를 사용하면 네이버 지도 sdk의 NDK 레벨에서 에러를 내보내며 앱이 죽습니다.
+  /// 또한 hot restart 시엔 지도 객체가 destory된 후 재생성되지 않습니다.
   final bool useTextureView;
 
   /// TextureView를 투명하게 만들지 여부.
@@ -314,7 +317,7 @@ class NaverMapOptions {
     this.logoGravity = AndroidPlatformConstants.noGravity,
     this.logoMargin = EdgeInsets.zero,
     this.fpsLimit = 0,
-    this.useTextureView = false,
+    this.useTextureView = kDebugMode,
     this.translucentTextureSurface = false,
     this.zOrderMediaOverlay = false,
     this.preserveEGLContextOnPause = true,
