@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Naver map example'),
         ),
-        body: NaverMap(
-          clientId: 'Your client id',
-        ),
+        body: NaverMap('Your client id'),
       ),
     );
   }
