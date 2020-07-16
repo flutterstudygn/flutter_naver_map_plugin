@@ -1,7 +1,7 @@
 part of flutter_naver_map_plugin;
 
 /// 지도의 옵션을 지정하는 클래스.
-class NaverMapOptions {
+class _NaverMapOptions {
   /// 지도의 로캘을 지정합니다.
   ///
   /// 기본값은 시스템 로캘입니다.
@@ -287,7 +287,7 @@ class NaverMapOptions {
   /// 기본값은 true입니다.
   final bool preserveEGLContextOnPause;
 
-  NaverMapOptions({
+  _NaverMapOptions._({
     this.minZoom = NaverMap.minimumZoom,
     this.maxZoom = NaverMap.maximumZoom,
     this.contentPadding = EdgeInsets.zero,
@@ -329,9 +329,9 @@ class NaverMapOptions {
     double scrollGesturesFriction = NaverMap.defaultScrollGesturesFriction,
     double zoomGesturesFriction = NaverMap.defaultZoomGesturesFriction,
     double rotateGesturesFriction = NaverMap.defaultRotateGesturesFriction,
+    Locale locale,
     CameraPosition camera,
-  })  : locale = ui.window.locale,
-        buildingHeight = Geometry.clamp(buildingHeight, 0.0, 1.0),
+  })  : buildingHeight = Geometry.clamp(buildingHeight, 0.0, 1.0),
         lightness = Geometry.clamp(lightness, -1.0, 1.0),
         symbolScale = Geometry.clamp(symbolScale, 0.0, 2.0),
         symbolPerspectiveRatio =
@@ -341,6 +341,7 @@ class NaverMapOptions {
         zoomGesturesFriction = Geometry.clamp(zoomGesturesFriction, 0.0, 1.0),
         rotateGesturesFriction =
             Geometry.clamp(rotateGesturesFriction, 0.0, 1.0),
+        locale = locale ?? ui.window.locale,
         camera = camera ??
             CameraPosition(
               LatLng(37.5666102, 126.9783881),
@@ -349,7 +350,7 @@ class NaverMapOptions {
               bearing: 0.0,
             );
 
-  /// 이 [NaverMapOptions]를 JSON 형태로 반환합니다.
+  /// 이 [_NaverMapOptions]를 JSON 형태로 반환합니다.
   Map<String, dynamic> get _json => {
         'locale': locale.toLanguageTag(),
         'extent': extent?._json,
@@ -404,50 +405,6 @@ class NaverMapOptions {
         'rotateGesturesFriction': rotateGesturesFriction,
         'camera': camera._json,
       };
-
-  NaverMapOptions get clone => NaverMapOptions(
-        minZoom: minZoom,
-        maxZoom: maxZoom,
-        contentPadding: contentPadding,
-        defaultCameraAnimationDuration: defaultCameraAnimationDuration,
-        mapType: mapType,
-        enabledLayerGroups: enabledLayerGroups,
-        disabledLayerGroups: disabledLayerGroups,
-        liteModeEnabled: liteModeEnabled,
-        nightModeEnabled: nightModeEnabled,
-        indoorEnabled: indoorEnabled,
-        indoorFocusRadius: indoorFocusRadius,
-        backgroundColor: backgroundColor,
-        // backgroundResource: backgroundResource, todo
-        pickTolerance: pickTolerance,
-        scrollGesturesEnabled: scrollGesturesEnabled,
-        zoomGesturesEnabled: zoomGesturesEnabled,
-        tiltGesturesEnabled: tiltGesturesEnabled,
-        rotateGesturesEnabled: rotateGesturesEnabled,
-        stopGesturesEnabled: stopGesturesEnabled,
-        compassEnabled: compassEnabled,
-        scaleBarEnabled: scaleBarEnabled,
-        zoomControlEnabled: zoomControlEnabled,
-        indoorLevelPickerEnabled: indoorLevelPickerEnabled,
-        locationButtonEnabled: locationButtonEnabled,
-        logoClickEnabled: logoClickEnabled,
-        logoGravity: logoGravity,
-        logoMargin: logoMargin,
-        fpsLimit: fpsLimit,
-        useTextureView: useTextureView,
-        translucentTextureSurface: translucentTextureSurface,
-        zOrderMediaOverlay: zOrderMediaOverlay,
-        preserveEGLContextOnPause: preserveEGLContextOnPause,
-        extent: extent,
-        buildingHeight: buildingHeight,
-        lightness: lightness,
-        symbolScale: symbolScale,
-        symbolPerspectiveRatio: symbolPerspectiveRatio,
-        scrollGesturesFriction: scrollGesturesFriction,
-        zoomGesturesFriction: zoomGesturesFriction,
-        rotateGesturesFriction: rotateGesturesFriction,
-        camera: camera,
-      );
 
   @override
   String toString() => '$runtimeType: $_json';
