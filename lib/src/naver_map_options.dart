@@ -10,7 +10,7 @@ class _NaverMapOptions {
   /// 지도의 초기 카메라 위치를 지정합니다.
   ///
   /// 기본 위치는 서울특별시청입니다.
-  final CameraPosition camera;
+  final CameraPosition cameraPosition;
 
   /// 지도의 제한 영역을 지정합니다.
   ///
@@ -330,7 +330,7 @@ class _NaverMapOptions {
     double zoomGesturesFriction = NaverMap.defaultZoomGesturesFriction,
     double rotateGesturesFriction = NaverMap.defaultRotateGesturesFriction,
     Locale locale,
-    CameraPosition camera,
+    CameraPosition cameraPosition,
   })  : buildingHeight = Geometry.clamp(buildingHeight, 0.0, 1.0),
         lightness = Geometry.clamp(lightness, -1.0, 1.0),
         symbolScale = Geometry.clamp(symbolScale, 0.0, 2.0),
@@ -342,7 +342,7 @@ class _NaverMapOptions {
         rotateGesturesFriction =
             Geometry.clamp(rotateGesturesFriction, 0.0, 1.0),
         locale = locale ?? ui.window.locale,
-        camera = camera ??
+        cameraPosition = cameraPosition ??
             CameraPosition(
               LatLng(37.5666102, 126.9783881),
               zoom: 14,
@@ -403,7 +403,7 @@ class _NaverMapOptions {
         'scrollGesturesFriction': scrollGesturesFriction,
         'zoomGesturesFriction': zoomGesturesFriction,
         'rotateGesturesFriction': rotateGesturesFriction,
-        'camera': camera._json,
+        'cameraPosition': cameraPosition._json,
       };
 
   @override

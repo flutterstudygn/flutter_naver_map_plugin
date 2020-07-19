@@ -99,7 +99,7 @@ class Convert {
                     options.scrollGesturesFriction((o["scrollGesturesFriction"] as Double).toFloat())
                     options.zoomGesturesFriction((o["zoomGesturesFriction"] as Double).toFloat())
                     options.rotateGesturesFriction((o["rotateGesturesFriction"] as Double).toFloat())
-                    options.camera(interpretCameraPosition(o["camera"] as Map<*, *>))
+                    options.camera(interpretCameraPosition(o["cameraPosition"] as Map<*, *>))
                 }
 
         private fun toLocale(locale: String): Locale {
