@@ -40,10 +40,10 @@ class CameraPosition {
           NaverMap.maximumTilt,
         );
 
-  /// 이 [CameraPosition]을 JSON 형태로 반환합니다.
-  Map<String, dynamic> get _json => {
+  /// 이 [CameraPosition]을 Map 형태로 반환합니다.
+  Map<String, dynamic> get _map => {
         'bearing': bearing,
-        'target': target._json,
+        'target': target._map,
         'tilt': tilt,
         'zoom': zoom,
       };
@@ -63,5 +63,5 @@ class CameraPosition {
   int get hashCode => hashValues(bearing, target, tilt, zoom);
 
   @override
-  String toString() => '$runtimeType: $_json';
+  String toString() => '$runtimeType: $_map';
 }

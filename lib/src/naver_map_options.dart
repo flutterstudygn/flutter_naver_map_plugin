@@ -350,10 +350,10 @@ class _NaverMapOptions {
               bearing: 0.0,
             );
 
-  /// 이 [_NaverMapOptions]를 JSON 형태로 반환합니다.
-  Map<String, dynamic> get _json => {
+  /// 이 [_NaverMapOptions]를 Map 형태로 반환합니다.
+  Map<String, dynamic> get _map => {
         'locale': locale.toLanguageTag(),
-        'extent': extent?._json,
+        'extent': extent?._map,
         'minZoom': minZoom,
         'maxZoom': maxZoom,
         'contentPadding': {
@@ -403,9 +403,9 @@ class _NaverMapOptions {
         'scrollGesturesFriction': scrollGesturesFriction,
         'zoomGesturesFriction': zoomGesturesFriction,
         'rotateGesturesFriction': rotateGesturesFriction,
-        'cameraPosition': cameraPosition._json,
+        'cameraPosition': cameraPosition._map,
       };
 
   @override
-  String toString() => '$runtimeType: $_json';
+  String toString() => '$runtimeType: $_map';
 }

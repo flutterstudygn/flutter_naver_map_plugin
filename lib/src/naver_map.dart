@@ -176,7 +176,7 @@ class _NaverMapState extends State<NaverMap> {
   Widget build(BuildContext context) {
     final creationParams = <String, dynamic>{
       'clientId': widget.clientId,
-      'options': widget._naverMapOptions._json,
+      'options': widget._naverMapOptions._map,
     };
 
     if (defaultTargetPlatform == TargetPlatform.android) {

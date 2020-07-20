@@ -54,8 +54,8 @@ class LatLng {
       !latitude.isInfinite &&
       !longitude.isInfinite;
 
-  /// 이 [LatLng]를 JSON형태로 반환합니다.
-  Map<String, double> get _json => {
+  /// 이 [LatLng]를 Map 형태로 반환합니다.
+  Map<String, double> get _map => {
         'latitude': latitude,
         'longitude': longitude,
       };
@@ -87,7 +87,7 @@ class LatLng {
   }
 
   @override
-  String toString() => '$runtimeType: $_json';
+  String toString() => '$runtimeType: $_map';
 
   @override
   bool operator ==(Object o) {
@@ -194,10 +194,10 @@ class LatLngBounds {
   /// [southwest]와 [northeast]가 모두 유효할 경우 유효한 것으로 간주됩니다.
   bool get isValid => southwest.isValid && northeast.isValid;
 
-  /// 이 객체를 JSON 형태로 반환합니다.
-  Map<String, Map<String, double>> get _json => {
-        'southwest': southwest._json,
-        'northeast': northeast._json,
+  /// 이 객체를 Map 형태로 반환합니다.
+  Map<String, Map<String, double>> get _map => {
+        'southwest': southwest._map,
+        'northeast': northeast._map,
       };
 
   /// 이 [LatLngBounds]가 [point]를 포함하는지 여부를 반환합니다.
@@ -302,7 +302,7 @@ class LatLngBounds {
   }
 
   @override
-  String toString() => '$runtimeType: $_json';
+  String toString() => '$runtimeType: $_map';
 
   @override
   bool operator ==(Object o) =>
