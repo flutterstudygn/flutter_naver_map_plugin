@@ -47,10 +47,10 @@ class _NaverMapOptions {
   final MapType mapType;
 
   /// 활성화할 레이어 그룹의 목록.
-  final List<String> enabledLayerGroups;
+  final Set<String> enabledLayerGroups;
 
   /// 비활성화할 레이어 그룹의 목록.
-  final List<String> disabledLayerGroups;
+  final Set<String> disabledLayerGroups;
 
   /// 라이트 모드를 활성화할지 여부.
   ///
@@ -294,8 +294,8 @@ class _NaverMapOptions {
     this.defaultCameraAnimationDuration =
         NaverMap.defaultCameraAnimationDuration,
     this.mapType = MapType.basic,
-    this.enabledLayerGroups = const [],
-    this.disabledLayerGroups = const [],
+    this.enabledLayerGroups = const {},
+    this.disabledLayerGroups = const {},
     this.liteModeEnabled = false,
     this.nightModeEnabled = false,
     this.indoorEnabled = false,

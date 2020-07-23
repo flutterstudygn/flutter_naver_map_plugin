@@ -67,8 +67,8 @@ class NaverMap extends StatefulWidget {
     int defaultCameraAnimationDuration =
         NaverMap.defaultCameraAnimationDuration,
     MapType mapType = MapType.basic,
-    List<String> enabledLayerGroups = const [],
-    List<String> disabledLayerGroups = const [],
+    Set<String> enabledLayerGroups = const {},
+    Set<String> disabledLayerGroups = const {},
     bool liteModeEnabled = false,
     bool nightModeEnabled = false,
     bool indoorEnabled = false,
