@@ -31,6 +31,15 @@ class LatLng {
       : latitude = latitude < -90 ? -90 : (90 < latitude ? 90 : latitude),
         longitude = (longitude + 180) % 360 - 180;
 
+  /// 기존의 [LatLng]을 새로운 객체로 복제합니다.
+  factory LatLng.clone(LatLng latLng) =>
+      LatLng(latLng.latitude, latLng.longitude);
+
+  factory LatLng.fromMap(Map<dynamic, dynamic> map) =>
+      LatLng(map['latitude'], map['longitude']);
+
+  factory LatLng.fromList(List<double> list) => LatLng(list[0], list[1]);
+
   /// 이 [LatLng]의 [longitude]를 [minimumLongitude]와 [maximumLongitude]의 범위로 래핑한 [LatLng]을 반환합니다.
   ///
   /// [longitude]가 이미 해당 범위에 속해 있을 경우 새로운 객체가 만들어지지 않고 [this]가 반환됩니다.
@@ -54,11 +63,12 @@ class LatLng {
       !latitude.isInfinite &&
       !longitude.isInfinite;
 
-  /// 이 [LatLng]를 Map 형태로 반환합니다.
   Map<String, double> get _map => {
         'latitude': latitude,
         'longitude': longitude,
       };
+
+  List<double> get _list => [latitude, longitude];
 
   /// [other]와의 거리를 반환합니다.
   double distanceTo(LatLng other) {
@@ -87,7 +97,7 @@ class LatLng {
   }
 
   @override
-  String toString() => '$runtimeType: $_map';
+  String toString() => '$runtimeType: $_list';
 
   @override
   bool operator ==(Object o) {
@@ -159,6 +169,14 @@ class LatLngBounds {
     return LatLngBounds(LatLng(south, west), LatLng(north, east));
   }
 
+  /// Map 형태의 객체에서 [LatLngBounds] 객체를 생성합니다.
+  ///
+  /// [map]에 필요 요소가 누락되거나 데이터형이 다르다면 ArgumentError 를 던집니다.
+  factory LatLngBounds.fromMap(Map<String, dynamic> map) => LatLngBounds(
+        LatLng.fromList(map['southwest']),
+        LatLng.fromList(map['northeast']),
+      );
+
   /// 최서단의 경도를 반환합니다.
   double get west => southwest.longitude;
 
@@ -194,10 +212,9 @@ class LatLngBounds {
   /// [southwest]와 [northeast]가 모두 유효할 경우 유효한 것으로 간주됩니다.
   bool get isValid => southwest.isValid && northeast.isValid;
 
-  /// 이 객체를 Map 형태로 반환합니다.
-  Map<String, Map<String, double>> get _map => {
-        'southwest': southwest._map,
-        'northeast': northeast._map,
+  Map<String, dynamic> get _map => {
+        'southwest': southwest._list,
+        'northeast': northeast._list,
       };
 
   /// 이 [LatLngBounds]가 [point]를 포함하는지 여부를 반환합니다.

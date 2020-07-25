@@ -1,5 +1,56 @@
 part of flutter_naver_map_plugin;
 
+/// 네이버 지도가 사용 준비됨을 알리는 콜백 함수
+///
+/// 지도가 생성됐을 때 [NaverMap.onMapCreated]를 통해 [NaverMapController]를 얻을 수 있다.
+typedef MapCreatedCallback = void Function(NaverMapController controller);
+
+/// 카메라가 움직이면 호출되는 콜백 메서드.
+///
+/// 해당 시점의 카메라 위치는 콜백 내에서 [NaverMapController.cameraPosition]을 호출해 구할 수 있습니다.
+///
+/// [reason]은 움직임의 원인이며 [animated]는 애니메이션 효과의 적용 유무, [position]은 카메라의 위치입니다.
+typedef OnCameraChange = void Function(int reason, bool animated);
+
+/// 카메라의 움직임이 끝나면 호출되는 콜백 메서드.
+///
+/// 해당 시점의 카메라 위치는 콜백 내에서 [NaverMapController.cameraPosition]을 호출해 구할 수 있습니다.
+///
+/// 이 이벤트는 다음과 같은 경우에 발생합니다.
+/// - 카메라가 애니메이션 없이 움직일 때. 단, 사용자가 제스처로 지도를 움직이는 경우 제스처가 완전히 끝날 때까지는 연속적인 이동으로 간주되어 이벤트가 발생하지 않습니다.
+/// - 카메라 애니메이션이 완료될 때. 단, 카메라 애니메이션이 진행 중일 때 새로운 애니메이션이 발생하거나, 기존 [CameraUpdate]의 [CameraUpdate.finishCallback] 또는 [CameraUpdate.cancelCallback]으로 지정된 콜백 내에서 카메라 이동이 일어날 경우 연속적인 이동으로 간주되어 이벤트가 발생하지 않습니다.
+/// - [NaverMapController.cancelTransitions]가 호출되어 카메라 애니메이션이 명시적으로 취소될 때.
+typedef OnCameraIdle = void Function();
+
+/// 지도의 옵션이 변경되면 호출되는 콜백 메서드.
+///
+/// 지도의 최소/최대 줌, 레이어 활성화/비활성화 상태 등이 변경되면 이벤트가 발생합니다.
+typedef OnOptionChange = void Function();
+
+/// 지도가 클릭되면 호출되는 콜백 메서드.
+///
+/// [point]과 [coord]는 각각 클릭된 지점의 화면 좌표와 지도 좌표입니다.
+typedef OnMapClick = void Function(Offset point, LatLng coord);
+
+/// 지도가 롱 클릭되면 호출되는 콜백 메서드.
+///
+/// [point]과 [coord]는 각각 클릭된 지점의 화면 좌표와 지도 좌표입니다.
+typedef OnMapLongClick = void Function(Offset point, LatLng coord);
+
+/// 지도가 더블 탭되면 호출되는 콜백 메서드.
+///
+/// [point]과 [coord]는 각각 클릭된 지점의 화면 좌표와 지도 좌표입니다.
+///
+/// 기존 NaverMap SDK에서는 반환값에 따라 이벤트가 소비되지만 현재로선 네이티브 코드에서 플러터 함수 반환값에 대한 비동가 작업이 어려워 이벤트를 소비하지 않도록 합니다.
+typedef OnMapDoubleTap = void Function(Offset point, LatLng coord);
+
+/// 지도가 두 손가락 탭되면 호출되는 콜백 메서드.
+///
+/// [point]과 [coord]는 각각 두 손가락 탭된 중심 지점의 화면 좌표와 지도 좌표입니다.
+///
+/// 기존 NaverMap SDK에서는 반환값에 따라 이벤트가 소비되지만 현재로선 네이티브 코드에서 플러터 함수 반환값에 대한 비동가 작업이 어려워 이벤트를 소비하지 않도록 합니다.
+typedef OnMapTwoFingerTap = void Function(Offset point, LatLng coord);
+
 class NaverMap extends StatefulWidget {
   /// 지도에서 표현할 수 있는 최소 줌 레벨.
   static const double minimumZoom = 0;
@@ -54,12 +105,21 @@ class NaverMap extends StatefulWidget {
   /// Naver Cloud Platform에서 발급되는 client ID.
   final String clientId;
 
-  final NaverMapOptions _naverMapOptions;
+  /// 네이버 지도가 사용 준비됨을 알리는 콜백 함수
+  ///
+  /// 이 [NaverMap]을 위한 [NaverMapController]를 얻는 용도로 사용한다.
+  final MapCreatedCallback onMapCreated;
 
+  /// 지도의 초기 옵션.
+  final _NaverMapOptions _naverMapOptions;
+
+  /// 네이버 지도 객체를 생성합니다.
+  ///
+  /// [clientId], [gestureRecognizers],[onMapCreated],[key]를 제외한 매개변수들은 [_NaverMapOptions]를 참고하기바랍니다.
   NaverMap(
     this.clientId, {
-    this.gestureRecognizers,
-    NaverMapOptions naverMapOptions,
+    this.gestureRecognizers = const {},
+    this.onMapCreated,
     Key key,
     double minZoom = NaverMap.minimumZoom,
     double maxZoom = NaverMap.maximumZoom,
@@ -67,14 +127,13 @@ class NaverMap extends StatefulWidget {
     int defaultCameraAnimationDuration =
         NaverMap.defaultCameraAnimationDuration,
     MapType mapType = MapType.basic,
-    Set<String> enabledLayerGroups = const {},
-    Set<String> disabledLayerGroups = const {},
+    Set<LayerGroup> enabledLayerGroups = const {},
+    Set<LayerGroup> disabledLayerGroups = const {},
     bool liteModeEnabled = false,
     bool nightModeEnabled = false,
     bool indoorEnabled = false,
     int indoorFocusRadius = -1,
     backgroundColor = NaverMap.defaultBackgroundColorLight,
-    // int backgroundResource = 0, TODO
     int pickTolerance = NaverMap.defaultPickToleranceDP,
     bool scrollGesturesEnabled = true,
     bool zoomGesturesEnabled = true,
@@ -118,7 +177,6 @@ class NaverMap extends StatefulWidget {
           indoorEnabled: indoorEnabled,
           indoorFocusRadius: indoorFocusRadius,
           backgroundColor: backgroundColor,
-          // backgroundResource: backgroundResource, todo
           pickTolerance: pickTolerance,
           scrollGesturesEnabled: scrollGesturesEnabled,
           zoomGesturesEnabled: zoomGesturesEnabled,
@@ -146,7 +204,7 @@ class NaverMap extends StatefulWidget {
           scrollGesturesFriction: scrollGesturesFriction,
           zoomGesturesFriction: zoomGesturesFriction,
           rotateGesturesFriction: rotateGesturesFriction,
-          camera: camera ??
+          cameraPosition: camera ??
               CameraPosition(
                 LatLng(37.5666102, 126.9783881),
                 zoom: 14,
@@ -197,11 +255,11 @@ class _NaverMapState extends State<NaverMap> {
       );
     }
 
-    return Text(
+    throw Exception(
         '$defaultTargetPlatform is not yet supported by the maps plugin');
   }
 
   void onCreateMap(int id) {
-    NaverMapController.init(id, widget._naverMapOptions);
+    widget.onMapCreated?.call(NaverMapController._(this, id));
   }
 }

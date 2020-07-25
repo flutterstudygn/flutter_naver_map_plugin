@@ -29,8 +29,6 @@ class _NaverMapOptions {
 
   /// 지도의 컨텐츠 패딩.
   ///
-  /// 단위는 픽셀입니다.
-  ///
   /// 기본값은 모두 0입니다.
   final EdgeInsets contentPadding;
 
@@ -47,10 +45,10 @@ class _NaverMapOptions {
   final MapType mapType;
 
   /// 활성화할 레이어 그룹의 목록.
-  final Set<String> enabledLayerGroups;
+  final Set<LayerGroup> enabledLayerGroups;
 
   /// 비활성화할 레이어 그룹의 목록.
-  final Set<String> disabledLayerGroups;
+  final Set<LayerGroup> disabledLayerGroups;
 
   /// 라이트 모드를 활성화할지 여부.
   ///
@@ -126,15 +124,6 @@ class _NaverMapOptions {
   ///
   /// 기본값은 [NaverMap.defaultBackgroundColorLight]입니다.
   final Color backgroundColor;
-
-  /// 지도의 배경 리소스.
-  ///
-  /// 배경은 해당 지역의 지도 데이터가 없거나 로딩 중일 때 나타납니다.
-  /// resId가 올바르지 않을 경우 backgroundColor(int)를 이용해 지정된 배경색이 사용됩니다.
-  ///
-  /// 기본값은 NaverMap.DEFAULT_BACKGROUND_DRWABLE_LIGHT입니다.
-  // TODO: 리소스 관련 속성으로 차후 작업 필요.
-  //  final int backgroundResource;
 
   /// 지도 클릭 시 피킹되는 [Pickable]의 클릭 허용 반경.
   ///
@@ -301,7 +290,6 @@ class _NaverMapOptions {
     this.indoorEnabled = false,
     this.indoorFocusRadius = -1,
     this.backgroundColor = NaverMap.defaultBackgroundColorLight,
-//    this.backgroundResource = 0, TODO
     this.pickTolerance = NaverMap.defaultPickToleranceDP,
     this.scrollGesturesEnabled = true,
     this.zoomGesturesEnabled = true,
@@ -350,28 +338,26 @@ class _NaverMapOptions {
               bearing: 0.0,
             );
 
-  /// 이 [_NaverMapOptions]를 Map 형태로 반환합니다.
   Map<String, dynamic> get _map => {
         'locale': locale.toLanguageTag(),
         'extent': extent?._map,
         'minZoom': minZoom,
         'maxZoom': maxZoom,
-        'contentPadding': {
-          'left': contentPadding.left,
-          'top': contentPadding.top,
-          'right': contentPadding.right,
-          'bottom': contentPadding.bottom
-        },
+        'contentPadding': [
+          contentPadding.left,
+          contentPadding.top,
+          contentPadding.right,
+          contentPadding.bottom,
+        ],
         'defaultCameraAnimationDuration': defaultCameraAnimationDuration,
         'mapType': mapType.index,
-        'enabledLayerGroups': enabledLayerGroups,
-        'disabledLayerGroups': disabledLayerGroups,
+        'enabledLayerGroups': enabledLayerGroups.toList(),
+        'disabledLayerGroups': disabledLayerGroups.toList(),
         'liteModeEnabled': liteModeEnabled,
         'nightModeEnabled': nightModeEnabled,
         'indoorEnabled': indoorEnabled,
         'indoorFocusRadius': indoorFocusRadius,
         'backgroundColor': backgroundColor.value,
-        //'backgroundResource' : backgroundResource, todo,
         'pickTolerance': pickTolerance,
         'scrollGesturesEnabled': scrollGesturesEnabled,
         'zoomGesturesEnabled': zoomGesturesEnabled,
@@ -385,12 +371,12 @@ class _NaverMapOptions {
         'locationButtonEnabled': locationButtonEnabled,
         'logoClickEnabled': logoClickEnabled,
         'logoGravity': logoGravity,
-        'logoMargin': {
-          'left': logoMargin.left,
-          'top': logoMargin.top,
-          'right': logoMargin.right,
-          'bottom': logoMargin.bottom
-        },
+        'logoMargin': [
+          logoMargin.left,
+          logoMargin.top,
+          logoMargin.right,
+          logoMargin.bottom,
+        ],
         'fpsLimit': fpsLimit,
         'useTextureView': useTextureView,
         'translucentTextureSurface': translucentTextureSurface,

@@ -1,5 +1,6 @@
 library flutter_naver_map_plugin;
 
+import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -15,4 +16,4 @@ part 'src/naver_map.dart';
 part 'src/naver_map_controller.dart';
 part 'src/naver_map_options.dart';
 part 'src/platform_constants.dart';
-part 'src/ui.dart';
+part 'src/enums.dart';

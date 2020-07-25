@@ -6,6 +6,7 @@ import androidx.lifecycle.Lifecycle
 import com.naver.maps.map.NaverMapOptions
 import com.naver.maps.map.NaverMapSdk
 import io.flutter.plugin.common.BinaryMessenger
+import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
@@ -33,13 +34,15 @@ class NaverMapFactory(
         if (params.containsKey("options")) {
             options = Convert.interpretNaverMapOptions(params["options"] as Map<*, *>, context.resources.displayMetrics.density)
         }
+
         return FlutterNaverMap(
                 id = viewId,
                 context = context,
                 registrar = registrar,
                 application = application,
                 activityHashCode = activityHashCode,
-                naverMapOptions = options ?: NaverMapOptions()
+                naverMapOptions = options ?: NaverMapOptions(),
+                binaryMessenger = binaryMessenger
         )
     }
 }
