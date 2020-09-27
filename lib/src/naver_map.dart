@@ -110,7 +110,6 @@ class NaverMap extends StatefulWidget {
   /// 이 [NaverMap]을 위한 [NaverMapController]를 얻는 용도로 사용한다.
   final MapCreatedCallback onMapCreated;
 
-  /// 지도의 초기 옵션.
   final _NaverMapOptions _naverMapOptions;
 
   /// 네이버 지도 객체를 생성합니다.
@@ -230,6 +229,8 @@ class NaverMap extends StatefulWidget {
 }
 
 class _NaverMapState extends State<NaverMap> {
+  NaverMapController _controller;
+
   @override
   Widget build(BuildContext context) {
     final creationParams = <String, dynamic>{
@@ -237,29 +238,42 @@ class _NaverMapState extends State<NaverMap> {
       'options': widget._naverMapOptions._map,
     };
 
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      return AndroidView(
-        viewType: 'rooftop/flutter_naver_map_plugin',
-        gestureRecognizers: widget.gestureRecognizers,
-        creationParams: creationParams,
-        onPlatformViewCreated: onCreateMap,
-        creationParamsCodec: const StandardMessageCodec(),
-      );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return UiKitView(
-        viewType: 'rooftop/flutter_naver_map_plugin',
-        gestureRecognizers: widget.gestureRecognizers,
-        creationParams: creationParams,
-        onPlatformViewCreated: onCreateMap,
-        creationParamsCodec: const StandardMessageCodec(),
-      );
-    }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final height = constraints.maxHeight;
 
-    throw Exception(
-        '$defaultTargetPlatform is not yet supported by the maps plugin');
+        _controller?._width = width;
+        _controller?._height = height;
+
+        if (defaultTargetPlatform == TargetPlatform.android) {
+          return AndroidView(
+            viewType: 'rooftop/flutter_naver_map_plugin',
+            gestureRecognizers: widget.gestureRecognizers,
+            creationParams: creationParams,
+            onPlatformViewCreated: (id) => onCreateMap(id, width, height),
+            creationParamsCodec: const StandardMessageCodec(),
+          );
+        } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+          return UiKitView(
+            viewType: 'rooftop/flutter_naver_map_plugin',
+            gestureRecognizers: widget.gestureRecognizers,
+            creationParams: creationParams,
+            onPlatformViewCreated: (id) => onCreateMap(id, width, height),
+            creationParamsCodec: const StandardMessageCodec(),
+          );
+        }
+
+        throw Exception(
+            '$defaultTargetPlatform is not yet supported by the maps plugin');
+      },
+    );
   }
 
-  void onCreateMap(int id) {
-    widget.onMapCreated?.call(NaverMapController._(this, id));
+  void onCreateMap(int id, double width, double height) {
+    _controller = NaverMapController._(this, id)
+      .._width = width
+      .._height = height;
+    widget.onMapCreated?.call(_controller);
   }
 }

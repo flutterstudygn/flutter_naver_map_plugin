@@ -78,6 +78,10 @@ class NaverMapController {
 
   CameraUpdate _lastCameraUpdate;
 
+  double _width;
+
+  double _height;
+
   NaverMapController._(this._mapState, int id)
       : _channel = MethodChannel('rooftop/flutter_naver_map_plugin#$id') {
     final options = _mapState.widget._naverMapOptions;
@@ -112,16 +116,16 @@ class NaverMapController {
   }
 
   /// 지도 뷰의 화면상 너비를 반환합니다.
-  double get width => _mapState.context.size.width;
+  double get width => _width;
 
   /// 지도 뷰의 화면상 높이를 반환합니다.
-  double get height => _mapState.context.size.height;
+  double get height => _height;
 
   /// 패딩을 제외한 지도 뷰의 화면상 너비를 반환합니다.
-  double get contentWidth => width - _contentPadding.horizontal;
+  double get contentWidth => _width - _contentPadding.horizontal;
 
   /// 패딩을 제외한 지도 뷰의 높이를 반환합니다.
-  double get contentHeight => height - _contentPadding.vertical;
+  double get contentHeight => _height - _contentPadding.vertical;
 
   /// 패딩을 제외한 지도 뷰의 화면상 영역을 반환합니다.
   Rect get contentRect {
