@@ -140,10 +140,10 @@ class Convert {
         }
 
         private fun interpretContentPadding(o: List<*>, density: Float): IntArray = intArrayOf(
-                (o[0] as Double * density).roundToInt(),
-                (o[1] as Double * density).roundToInt(),
-                (o[2] as Double * density).roundToInt(),
-                (o[3] as Double * density).roundToInt()
+                ((o[0] as Double) * density).roundToInt(),
+                ((o[1] as Double) * density).roundToInt(),
+                ((o[2] as Double) * density).roundToInt(),
+                ((o[3] as Double) * density).roundToInt()
         )
 
         private fun interpretPointF(o: List<*>): PointF = PointF(

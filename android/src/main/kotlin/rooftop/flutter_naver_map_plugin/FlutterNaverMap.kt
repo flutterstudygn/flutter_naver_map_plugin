@@ -214,10 +214,10 @@ class FlutterNaverMap(
                 val ltrb = call.arguments as List<*>
                 val density = context.resources.displayMetrics.density
                 map.setContentPadding(
-                        ((ltrb[0] as Int) * density).roundToInt(),
-                        ((ltrb[1] as Int) * density).roundToInt(),
-                        ((ltrb[2] as Int) * density).roundToInt(),
-                        ((ltrb[3] as Int) * density).roundToInt()
+                        ((ltrb[0] as Double) * density).roundToInt(),
+                        ((ltrb[1] as Double) * density).roundToInt(),
+                        ((ltrb[2] as Double) * density).roundToInt(),
+                        ((ltrb[3] as Double) * density).roundToInt()
                 )
                 result.success(ltrb)
             }
